@@ -10,3 +10,15 @@
 您可以通过以下命令安装 `ffmpeg`：
 ```bash
 brew install ffmpeg  # 在 MacOS 上使用 Homebrew 安装
+使用方法
+步骤 1：提取视频流信息
+
+首先，使用 ffprobe 从 MP4 文件中提取相关流信息。运行以下命令：
+```bash
+ffprobe -v quiet -show_packets /path/to/your/video.mp4 | grep -E "stream_index|dts_time|pts_time|pos"
+
+
+步骤 2：使用 Python 处理数据
+在提取了流数据后，您可以将其通过管道传输到 Python 脚本中进行交错可视化处理：
+```bash
+ffprobe -v quiet -show_packets /path/to/your/video.mp4 | grep -E "stream_index|dts_time|pts_time|pos" | python3 /path/to/visualize_interleave.py
